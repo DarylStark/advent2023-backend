@@ -1,0 +1,14 @@
+name: Test (dev)
+run-name: Test (dev)
+on:
+  push:
+    branches:
+      dev*
+
+jobs:
+  build-and-deploy:
+    name: Build and deploy
+    uses: ./.github/workflows/_deploy_to_docker.yml
+    with:
+      version: "0.0.1"
+      release_train: "dev"
