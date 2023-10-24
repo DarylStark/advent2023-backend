@@ -1,0 +1,17 @@
+name: Publish production image
+run-name: Publish production image
+on:
+  push:
+    branches:
+      main
+
+jobs:
+  build-and-deploy:
+    name: Build and deploy
+    uses: ./.github/workflows/_deploy_to_docker.yml
+    with:
+      version: "0.0.1"
+      release_train: "prod"
+    secrets:
+      docker_username: ${{ secrets.DOCKER_USERNAME }}
+      docker_password: ${{ secrets.DOCKER_PASSWORD }}
