@@ -1,6 +1,5 @@
-import TemporaryRetriever from './questions/temporary_retriever.js';
-import QuestionRetriever from './questions/question_retriever.js';
+import LocalRetriever from './questions/local_retriever.js';
 
-const question_retriever = new TemporaryRetriever();
+const question_retriever = new LocalRetriever();
 
 export default { question_retriever };
