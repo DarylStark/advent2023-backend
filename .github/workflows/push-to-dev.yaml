@@ -1,5 +1,5 @@
-name: Test (dev)
-run-name: Test (dev)
+name: Publish dev image
+run-name: Publish dev image
 on:
   push:
     branches:
