@@ -12,3 +12,6 @@ jobs:
     with:
       version: "0.0.1"
       release_train: "dev"
+    secrets:
+      docker_username: ${{ secrets.DOCKER_USERNAME }}
+      docker_password: ${{ secrets.DOCKER_PASSWORD }}
