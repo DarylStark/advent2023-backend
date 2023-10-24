@@ -35,4 +35,4 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: 
-            dast1986/advent2023:${{ inputs.version }}-${{ inputs.release_train }}
+            dast1986/advent2023-backend:${{ inputs.version }}-${{ inputs.release_train }}
