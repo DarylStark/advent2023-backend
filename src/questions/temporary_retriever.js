@@ -1,7 +1,8 @@
 import QuestionRetriever from './question_retriever.js';
+import Question from './question.js';
 
 const questions = {
-    1: { question: 'Wat is de hoofdstad van Nederland', answer: 'Amsterdam' }
+    1: new Question('Wat is de hoofdstad van Nederland', 'Amsterdam')
 }
 
 class TemporaryRetriever extends QuestionRetriever {
@@ -13,7 +14,7 @@ class TemporaryRetriever extends QuestionRetriever {
     get_question(day) {
         if (day in questions)
             return questions[day];
-        throw Error(`Unknon day: ${day}`);
+        throw Error(`Unknown day: ${day}`);
     }
 };
 

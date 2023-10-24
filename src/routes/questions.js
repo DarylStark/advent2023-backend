@@ -1,6 +1,8 @@
 // Get globals
 import globals from './../globals.js'
 
+import Response from '../response.js'
+
 import express from 'express';
 const router = express.Router();
 
@@ -24,23 +26,27 @@ router.get('/get', (req, res) => {
     const question = get_question_for_day(req.query.day);
     res.setHeader('Content-Type', 'text/json');
     res.send(
-        {
+        new Response({
             question: question.question
-        }
+        })
     );
 });
 
 router.post('/save', (req, res) => {
     const question = get_question_for_day(req.query.day);
     const given_answer = req.body.answer;
-    let status_code = 403;
-    let response_object = {
-        status: 'wrong'
-    };
+    let status_code = 500;
+    let response_object = new Response({
+        status: 'undefined'
+    });
 
-    if (question.answer == given_answer) {
+    if (question.is_correct_answer(given_answer)) {
         status_code = 200;
-        response_object.status = 'correct';
+        response_object.data.status = 'correct';
+    } else {
+        status_code = 406;
+        response_object.data.status = 'wrong_answer';
+        response_object.error.error = 'wrong_answer';
     }
 
     res.statusCode = status_code;
