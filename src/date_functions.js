@@ -4,6 +4,6 @@ function get_current_day() {
     return new Date(today_in_nl).getHours();
 }
 
-module.exports = {
+export default {
     get_current_day
 }
