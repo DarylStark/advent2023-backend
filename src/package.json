@@ -1,0 +1,14 @@
+{
+  "name": "advent2023-backend",
+  "version": "1.0.0",
+  "description": "Backend for the Advent 2023 project.",
+  "main": "index.js",
+  "scripts": {
+    "run": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
