@@ -20,12 +20,18 @@ function get_question_for_day(day) {
     return question_retriever.get_question(day_number);
 }
 
-router.get('/get', (req, res) => {
+router.get('/get', async (req, res) => {
+    const day_number = get_requested_day(req.query.day);
     const question = get_question_for_day(req.query.day);
-    res.setHeader('Content-Type', 'text/json');
+    const last_answers = await answer_manager.get_given_answers_for_day(day_number);
+    let correct = false;
+    if (last_answers.findIndex(item => item.toLowerCase() == question.answer.toLowerCase()) != -1)
+        correct = true;
     res.send(
         new Response({
-            question: question.question
+            question: question.question,
+            last_answers: last_answers,
+            correct: correct
         })
     );
 });
