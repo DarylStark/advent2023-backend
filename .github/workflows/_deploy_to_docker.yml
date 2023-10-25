@@ -1,0 +1,38 @@
+name: Publish Docker image
+run-name: Publish Docker image
+on:
+  workflow_call:
+    secrets:
+      docker_username:
+        required: true
+      docker_password:
+        required: true
+    inputs:
+      version:
+        type: string
+        description: "The version for the image (for instance: 1.2.4). Will be used as tag"
+      release_train:
+        type: string
+        description: "The release train for the image (for instance: 'dev' or 'test'). Leave empty for production"
+
+jobs:
+  push_to_registry:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+      
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.docker_username }}
+          password: ${{ secrets.docker_password }}
+      
+      - name: Build and push Docker image
+        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+        with:
+          file: ./Dockerfile
+          push: true
+          tags: 
+            dast1986/advent2023-backend:${{ inputs.version }}-${{ inputs.release_train }}
