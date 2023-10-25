@@ -1,12 +1,10 @@
 // Get globals
-import globals from './../globals.js'
-
+import { question_retriever, answer_manager } from './../globals.js'
 import Response from '../response.js'
-
 import express from 'express';
-const router = express.Router();
-
 import date_functions from '../date_functions.js';
+
+const router = express.Router();
 
 function get_requested_day(requested_day) {
     const current_day = date_functions.get_current_day()
@@ -14,12 +12,12 @@ function get_requested_day(requested_day) {
     if (!isNaN(requested_day) && requested_day && requested_day < current_day) {
         day = requested_day;
     };
-    return day;
+    return Number(day);
 }
 
 function get_question_for_day(day) {
     const day_number = get_requested_day(day);
-    return globals.question_retriever.get_question(day_number);
+    return question_retriever.get_question(day_number);
 }
 
 router.get('/get', (req, res) => {
@@ -32,13 +30,16 @@ router.get('/get', (req, res) => {
     );
 });
 
-router.post('/save', (req, res) => {
+router.post('/save', async (req, res) => {
     const question = get_question_for_day(req.query.day);
+    const day_number = get_requested_day(req.query.day);
     const given_answer = req.body.answer;
     let status_code = 500;
     let response_object = new Response({
         status: 'undefined'
     });
+
+    await answer_manager.save_answer_for_day(day_number, given_answer);
 
     if (question.is_correct_answer(given_answer)) {
         status_code = 200;

@@ -12,7 +12,8 @@
                 "<node_internals>/**"
             ],
             "cwd": "${workspaceFolder}/src",
-            "program": "${workspaceFolder}/src/index.js"
+            "program": "${workspaceFolder}/src/index.js",
+            "envFile": "${workspaceFolder}/environment/dev.env"
         }
     ]
 }
