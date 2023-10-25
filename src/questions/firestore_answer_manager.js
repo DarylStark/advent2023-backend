@@ -8,7 +8,6 @@ class FirestoreAnswerManager extends AnswerManager {
     }
 
     create_firestore_object() {
-        // TODO: Make the Firestore constructor args configurable
         if (this.firestore_object === null) {
             const firestore_configuration = {
                 projectId: process.env.FIRESTORE_PROJECT_ID
@@ -20,9 +19,8 @@ class FirestoreAnswerManager extends AnswerManager {
     }
 
     async get_firestore_collection() {
-        // TODO: Make the collection name configurable
         this.create_firestore_object();
-        const data = await this.firestore_object.collection('backend-dev');
+        const data = await this.firestore_object.collection(process.env.FIRESTORE_COLLECTION_NAME);
         return data;
     }
 
