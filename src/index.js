@@ -23,6 +23,6 @@ app.use('*', error_page_404);
 app.use(error_page);
 
 // Start the server
-app.listen(3000, () => {
-    console.info('Server started');
+app.listen(process.env.PORT, () => {
+    console.info(`Server started on port ${process.env.PORT}`);
 })
