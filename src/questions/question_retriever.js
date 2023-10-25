@@ -1,6 +1,5 @@
 class QuestionRetriever {
     constructor() {
-        console.log('QuestionRetriever created');
     }
 
     get_question(day) {

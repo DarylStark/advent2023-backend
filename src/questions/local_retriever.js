@@ -38,7 +38,6 @@ const questions = {
 class LocalRetriever extends QuestionRetriever {
     constructor() {
         super();
-        console.log('TemporaryRetriever created');
     }
 
     get_question(day) {
