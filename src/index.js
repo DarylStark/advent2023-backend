@@ -1,6 +1,8 @@
 // Set up Express
 import express from 'express';
 import bodyparser from 'express';
+import cors from 'cors';
+
 const app = express();
 
 // Load routes from the route modules
@@ -13,6 +15,10 @@ import error_page from './routes/error_page.js';
 
 // Configure modules
 app.use(bodyparser.json());
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST']
+}));
 
 // Mount routes
 app.use('/questions', questions);
