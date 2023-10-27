@@ -25,12 +25,25 @@ router.get('/get', async (req, res) => {
     const question = get_question_for_day(req.query.day);
     const last_answers = await answer_manager.get_given_answers_for_day(day_number);
     let correct = false;
+
     if (last_answers.findIndex(item => item.toLowerCase() == question.answer.toLowerCase()) != -1)
         correct = true;
+
+    // Convert the `last_answers` list to a list with a field indicating if
+    // this was the correct answer
+    const last_answers_with_correctness = new Array();
+    last_answers.forEach((last_answer) => {
+        last_answers_with_correctness.push(
+            {
+                answer: last_answer,
+                correct: question.is_correct_answer(last_answer)
+            });
+    });
+
     res.send(
         new Response({
             question: question.question,
-            last_answers: last_answers,
+            last_answers: last_answers_with_correctness,
             correct: correct
         })
     );
