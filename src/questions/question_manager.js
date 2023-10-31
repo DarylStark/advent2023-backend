@@ -2,37 +2,37 @@ import { Firestore } from '@google-cloud/firestore';
 import Question from './question.js';
 
 const initial_questions = [
-    new Question('Wat is de hoofdstad van Nederland?', 'Amsterdam'),
-    new Question('Wat is de hoofdstad van Belgie?', 'Brussel'),
-    new Question('Wat is de hoofdstad van Duitsland?', 'Berlijn'),
-    new Question('Wat is de hoofdstad van Frankrijk?', 'Parijs'),
-    new Question('Wat is de hoofdstad van Spanje?', 'Madrid'),
-    new Question('Wat is de hoofdstad van Portugal?', 'Lissabon'),
-    new Question('Wat is de hoofdstad van Polen?', 'Warsaw'),
-    new Question('Wat is de hoofdstad van Oekraine?', 'Kiev'),
-    new Question('Wat is de hoofdstad van Engeland?', 'Londen'),
-    new Question('Wat is de hoofdstad van Schotland?', 'Edinburgh'),
-    new Question('Wat is de hoofdstad van Noord Ierland?', 'Belfast'),
-    new Question('Wat is de hoofdstad van Ierland?', 'Dublin'),
-    new Question('Wat is de hoofdstad van Italie?', 'Rome'),
-    new Question('Wat is de hoofdstad van Griekenland?', 'Athene'),
-    new Question('Wat is de hoofdstad van Turkije?', 'Ankara'),
-    new Question('Wat is de hoofdstad van Nederland?', 'Amsterdam'),
-    new Question('Wat is de hoofdstad van Nederland?', 'Amsterdam'),
-    new Question('Wat is de hoofdstad van Nederland?', 'Amsterdam'),
-    new Question('Wat is de hoofdstad van Nederland?', 'Amsterdam'),
-    new Question('Wat is de hoofdstad van Nederland?', 'Amsterdam'),
-    new Question('Wat is de hoofdstad van Nederland?', 'Amsterdam'),
-    new Question('Wat is de hoofdstad van Nederland?', 'Amsterdam'),
-    new Question('Wat is de hoofdstad van Nederland?', 'Amsterdam'),
-    new Question('Wat is de hoofdstad van Nederland?', 'Amsterdam'),
-    new Question('Wat is de hoofdstad van Nederland?', 'Amsterdam'),
-    new Question('Wie is er vandaag jarig?', 'Daryl'),
-    new Question('Wat is de hoofdstad van Nederland?', 'Amsterdam'),
-    new Question('Wat is de hoofdstad van Nederland?', 'Amsterdam'),
-    new Question('Wat is de hoofdstad van Nederland?', 'Amsterdam'),
-    new Question('Wat is de hoofdstad van Nederland?', 'Amsterdam'),
-    new Question('Wat is de hoofdstad van Nederland?', 'Amsterdam')
+    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
+    { question: 'Wat is de hoofdstad van Belgie?', answer: 'Brussel' },
+    { question: 'Wat is de hoofdstad van Duitsland?', answer: 'Berlijn' },
+    { question: 'Wat is de hoofdstad van Frankrijk?', answer: 'Parijs' },
+    { question: 'Wat is de hoofdstad van Spanje?', answer: 'Madrid' },
+    { question: 'Wat is de hoofdstad van Portugal?', answer: 'Lissabon' },
+    { question: 'Wat is de hoofdstad van Polen?', answer: 'Warsaw' },
+    { question: 'Wat is de hoofdstad van Oekraine?', answer: 'Kiev' },
+    { question: 'Wat is de hoofdstad van Engeland?', answer: 'Londen' },
+    { question: 'Wat is de hoofdstad van Schotland?', answer: 'Edinburgh' },
+    { question: 'Wat is de hoofdstad van Noord Ierland?', answer: 'Belfast' },
+    { question: 'Wat is de hoofdstad van Ierland?', answer: 'Dublin' },
+    { question: 'Wat is de hoofdstad van Italie?', answer: 'Rome' },
+    { question: 'Wat is de hoofdstad van Griekenland?', answer: 'Athene' },
+    { question: 'Wat is de hoofdstad van Turkije?', answer: 'Ankara' },
+    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
+    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
+    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
+    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
+    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
+    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
+    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
+    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
+    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
+    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
+    { question: 'Wie is er op 26 oktober jarig?', answer: 'Daryl' },
+    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
+    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
+    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
+    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
+    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' }
 ]
 
 export default class QuestionManager {
@@ -81,6 +81,10 @@ export default class QuestionManager {
     async get_question(day) {
         const doc = await this.get_document(day);
         const question = await doc.get();
+        if (!question.exists) {
+            await this.reset();
+            return await this.get_question(day);
+        }
         return question.data();
     }
 
