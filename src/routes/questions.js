@@ -1,5 +1,5 @@
 // Get globals
-import { question_retriever, answer_manager } from './../globals.js'
+import { question_manager } from './../globals.js'
 import Response from '../response.js'
 import express from 'express';
 import date_functions from '../date_functions.js';
@@ -15,62 +15,36 @@ function get_requested_day(requested_day) {
     return Number(day);
 }
 
-function get_question_for_day(day) {
-    const day_number = get_requested_day(day);
-    return question_retriever.get_question(day_number);
-}
-
 router.get('/get', async (req, res) => {
     const day_number = get_requested_day(req.query.day);
-    const question = get_question_for_day(req.query.day);
-    const last_answers = await answer_manager.get_given_answers_for_day(day_number);
-    let correct = false;
-
-    if (last_answers.findIndex(item => item.toLowerCase() == question.answer.toLowerCase()) != -1)
-        correct = true;
-
-    // Convert the `last_answers` list to a list with a field indicating if
-    // this was the correct answer
-    const last_answers_with_correctness = new Array();
-    last_answers.forEach((last_answer) => {
-        last_answers_with_correctness.push(
-            {
-                answer: last_answer,
-                correct: question.is_correct_answer(last_answer)
-            });
-    });
-
-    res.send(
-        new Response({
-            question: question.question,
-            last_answers: last_answers_with_correctness,
-            correct: correct
-        })
-    );
+    let question = await question_manager.get_question(day_number);
+    if (!question.correct) delete question.answer;
+    res.send(new Response(question));
 });
 
 router.post('/save', async (req, res) => {
-    const question = get_question_for_day(req.query.day);
-    const day_number = get_requested_day(req.query.day);
     const given_answer = req.body.answer;
-    let status_code = 500;
+    let status_code = 200;
     let response_object = new Response({
         status: 'undefined'
     });
 
-    await answer_manager.save_answer_for_day(day_number, given_answer);
+    const day_number = get_requested_day(req.query.day);
+    const new_question = await question_manager.add_answer(day_number, given_answer);
+    response_object.data = new_question;
 
-    if (question.is_correct_answer(given_answer)) {
-        status_code = 200;
-        response_object.data.status = 'correct';
-    } else {
+    if (!new_question.correct) {
         status_code = 406;
-        response_object.data.status = 'wrong_answer';
-        response_object.error.error = 'wrong_answer';
+        delete response_object.data.answer;
     }
 
     res.statusCode = status_code;
     res.send(response_object);
+});
+
+router.get('/reset', async (req, res) => {
+    await question_manager.reset();
+    res.send(new Response({ done: true }));
 });
 
 export default router;
