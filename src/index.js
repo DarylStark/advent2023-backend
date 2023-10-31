@@ -8,7 +8,6 @@ const app = express();
 // Load routes from the route modules
 import error_page_404 from './routes/404.js';
 import questions from './routes/questions.js';
-import stats from './routes/stats.js';
 
 // Load error page
 import error_page from './routes/error_page.js';
@@ -22,7 +21,6 @@ app.use(cors({
 
 // Mount routes
 app.use('/questions', questions);
-app.use('/stats', stats);
 app.use('*', error_page_404);
 
 // Custom error pages

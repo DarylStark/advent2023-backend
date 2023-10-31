@@ -1,5 +1,4 @@
 import { Firestore } from '@google-cloud/firestore';
-import Question from './question.js';
 
 const initial_questions = [
     { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
