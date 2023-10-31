@@ -89,7 +89,7 @@ export default class QuestionManager {
 
     async add_answer(day, answer) {
         const question = await this.get_question(day);
-        question.given_answers.push(answer);
+        question.given_answers.unshift(answer);
         question.correct = question.answer.toLowerCase() === answer.toLowerCase();
         const doc = await this.get_document(day);
         await doc.set(question);
