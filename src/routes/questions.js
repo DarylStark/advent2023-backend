@@ -47,4 +47,13 @@ router.get('/reset', async (req, res) => {
     res.send(new Response({ done: true }));
 });
 
+router.get('/overview', async (req, res) => {
+    let output = {};
+    for (let day_number = 1; day_number <= 31; day_number++) {
+        let question = await question_manager.get_question(day_number);
+        output[day_number] = question.correct;
+    }
+    res.send(new Response(output));
+});
+
 export default router;
