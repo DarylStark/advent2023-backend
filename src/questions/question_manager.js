@@ -1,37 +1,50 @@
 import { Firestore } from '@google-cloud/firestore';
 
 const initial_questions = [
-    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
-    { question: 'Wat is de hoofdstad van Belgie?', answer: 'Brussel' },
-    { question: 'Wat is de hoofdstad van Duitsland?', answer: 'Berlijn' },
-    { question: 'Wat is de hoofdstad van Frankrijk?', answer: 'Parijs' },
-    { question: 'Wat is de hoofdstad van Spanje?', answer: 'Madrid' },
-    { question: 'Wat is de hoofdstad van Portugal?', answer: 'Lissabon' },
-    { question: 'Wat is de hoofdstad van Polen?', answer: 'Warsaw' },
-    { question: 'Wat is de hoofdstad van Oekraine?', answer: 'Kiev' },
-    { question: 'Wat is de hoofdstad van Engeland?', answer: 'Londen' },
-    { question: 'Wat is de hoofdstad van Schotland?', answer: 'Edinburgh' },
-    { question: 'Wat is de hoofdstad van Noord Ierland?', answer: 'Belfast' },
-    { question: 'Wat is de hoofdstad van Ierland?', answer: 'Dublin' },
-    { question: 'Wat is de hoofdstad van Italie?', answer: 'Rome' },
-    { question: 'Wat is de hoofdstad van Griekenland?', answer: 'Athene' },
-    { question: 'Wat is de hoofdstad van Turkije?', answer: 'Ankara' },
-    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
-    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
-    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
-    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
-    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
-    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
-    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
-    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
-    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
-    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
-    { question: 'Wie is er op 26 oktober jarig?', answer: 'Daryl' },
-    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
-    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
-    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
-    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' },
-    { question: 'Wat is de hoofdstad van Nederland?', answer: 'Amsterdam' }
+    // Jaartallen
+    { question: 'In welk jaar werd de eerste kerstkaart vezonden?', answer: '1843' },
+    { question: 'In wlke jaar werd Sinterklaas uitgeroepen tot nationale feestdag in Nederland?', answer: '1954' },
+    { question: 'Uit welke Roman van George Orwell komt de beroemde zin: "Big Brother Is Watching You"?', answer: '1984' },
+    { question: 'In welk jaar werd Daryl van Mieghem geboren?', answer: '1989' },
+
+    // Drankjes
+    { question: 'Welk drankje ontstond in 1940 in Duitsland omdat de juiste ingredienten voor Coca-Cola niet meer verkrijgbaar waren?', answer: 'Fanta' },
+    { question: 'Welke drankje werd in 1929 geintroduceerd als "Bib-Label Lithiated Lemon-Lime Soda"?', answer: '7Up' },
+    { question: 'Wat is een populair drankje uit Griekenland?', answer: 'Ouzo' },
+    { question: 'Wat voor type drank is Kopi Luwak?', answer: 'Koffie' },
+
+    // Nederlandse steden
+    { question: 'Welke Nederlandse stad heeft in het spel Monopoly de kleur groen?', answer: 'Rotterdam' },
+    { question: 'Welke Nederlandse stad wordt ook wel sleutestad genoemd?', answer: 'Leiden' },
+    { question: 'Waar is in 1619 de koopman Jan van Riebeeck geboren?', answer: 'Culemborg' },
+    { question: 'Waar wordt het Nederlandse filmfestival gehouden?', answer: 'Utrecht' },
+
+    // Landen
+    { question: 'Welk land gaf in 1886 het vrijheidsbeel cadeau aan de verenigde staten?', answer: 'Frankrijk' },
+    { question: 'Uit welk land komt Fosters bier?', answer: 'Australie' },
+    { question: 'Welk land heeft de hoogste gemiddelde leeftijd?', answer: 'Japan' },
+    { question: 'Uit welk land komt Odd Sides Ales bier?', answer: 'Verenigde Staten' },
+
+    // Datums
+    { question: 'Op welke datum wordt Sinterklaas in Suriname gevrierd?', answer: '3 december' },
+    { question: 'Op welke datum werd in 1964 het album "Beatles for Sale" gereleased?', answer: '4 december' },
+    { question: 'Op welke datum in 2013 overleed Nelson Mandela?', answer: '5 december' },
+    { question: 'Op welke datum wordt Pi Day gevierd?', answer: '14 maart' },
+
+    // Bieren
+    { question: 'Hoe heet het bier met het hoogste alcoholpercentage?', answer: 'Snake Venom' },
+    { question: 'Van welk biermerk kennen we de slogan "Ons Bier"?', answer: 'Amstel' },
+    { question: 'Van welke bierbrouwerij uit Talinn is het bier Meri Sichuan?', answer: 'Pohjala' },
+    { question: 'Van welke bierbrouwerij is het bier Zombination V?', answer: 'De Struise Brouwers' },
+    { question: 'Welke bierbrouwerij ligt in Pilsen?', answer: 'Plzensky Prazdroj' },
+    { question: 'Van welk merk is het favoriete bier van Homer Simpson?', answer: 'Duff' },
+    { question: 'Welke bierbrouwerij werd in 1873 opgericht?', answer: 'Heineken' },
+
+    // Getallen
+    { question: 'Hoeveel kleuren zitten er in een regenboog?', answer: '7' },
+    { question: 'Uit hoeveel snaren bestaat een ukelele doorgaans?', answer: '4' },
+    { question: 'Aan hoeveel landen grenst Mexico?', answer: '3' },
+    { question: 'Hoeveel winkels heeft de Bijenkorf als je Amstelveen en Groningen niet meetelt?', answer: '6' }
 ]
 
 export default class QuestionManager {
